@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HASAD — Köyden Seçildi, Sofranıza Ulaştı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F1E8; --panel:#FFFFFF; --panel2:#ECEFE6; --panel3:#DCE3D7;
+  --lime:#C8F169; --lime-d:#A9DB4E; --grn:#2E7A45; --tang:#D9662F;
+  --ink:#172A20; --ink-on:#14301E;
+  --cream:#F0F0E8; --muted:#5E6D62; --muted2:#8B9A90;
+  --line:rgba(23,42,32,.12); --line2:rgba(23,42,32,.06);
+  --disp:'Syne',sans-serif; --sans:'Space Grotesk',system-ui,sans-serif;
+  --rail:252px; --r:22px; --r2:30px; --maxw:1240px;
+  --sh:0 14px 36px rgba(23,42,32,.10);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(900px 520px at 88% -6%,rgba(46,122,69,.08),transparent 60%),radial-gradient(720px 520px at -12% 112%,rgba(217,102,47,.06),transparent 60%);}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:inherit;border:none;background:none;color:inherit;}
+::selection{background:var(--lime);color:var(--ink-on);}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1.02;}
+::-webkit-scrollbar{height:9px;width:9px;}
+::-webkit-scrollbar-thumb{background:var(--panel3);border-radius:9px;}
+::-webkit-scrollbar-track{background:transparent;}
+
+/* SIDEBAR (dark, for contrast) */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--rail);z-index:60;background:linear-gradient(180deg,#0E2017,#123022);border-right:1px solid rgba(0,0,0,.1);display:flex;flex-direction:column;padding:26px 18px;transition:transform .4s cubic-bezier(.4,0,.2,1);box-shadow:2px 0 24px rgba(23,42,32,.08);}
+.sb-logo{display:flex;align-items:center;gap:11px;cursor:pointer;padding:0 8px 8px;margin-bottom:26px;}
+.sb-logo .mark{width:42px;height:42px;border-radius:13px;background:var(--lime);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sb-logo b{font-family:var(--disp);font-size:1.4rem;font-weight:800;letter-spacing:.04em;display:block;line-height:.9;color:#F4F3EC;}
+.sb-logo small{font-size:.66rem;color:var(--lime);letter-spacing:.18em;text-transform:uppercase;}
+.sb-nav{display:flex;flex-direction:column;gap:4px;flex:1;}
+.sb-nav a{display:flex;align-items:center;gap:13px;padding:12px 14px;border-radius:14px;font-weight:600;font-size:.92rem;color:#A6B8AC;transition:all .22s;}
+.sb-nav a .ic{width:22px;text-align:center;font-size:1.05rem;transition:transform .22s;}
+.sb-nav a:hover{background:rgba(255,255,255,.07);color:#F4F3EC;}
+.sb-nav a:hover .ic{transform:scale(1.18);}
+.sb-nav a.on{background:var(--lime);color:var(--ink-on);font-weight:700;}
+.sb-foot{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;}
+.sb-wa{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:13px;border-radius:14px;background:#25D366;color:#06281A;font-weight:700;font-size:.85rem;transition:transform .2s,filter .2s;}
+.sb-wa:hover{transform:translateY(-2px);filter:brightness(1.08);}
+.sb-meta{font-size:.68rem;color:#7C8C82;text-align:center;margin-top:14px;line-height:1.5;}
+
+/* mobile top */
+.mtop{display:none;position:fixed;top:0;left:0;right:0;z-index:55;height:62px;background:rgba(243,241,232,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);align-items:center;justify-content:space-between;padding:0 16px;}
+.mtop .mlogo{display:flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:800;letter-spacing:.05em;color:var(--ink);}
+.mtop .mlogo .mark{width:32px;height:32px;border-radius:10px;background:var(--lime);display:flex;align-items:center;justify-content:center;}
+.burger{width:42px;height:42px;border-radius:12px;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+.burger span{width:18px;height:2px;background:var(--ink);border-radius:2px;}
+.ov{position:fixed;inset:0;background:rgba(23,42,32,.4);z-index:58;opacity:0;pointer-events:none;transition:opacity .35s;}
+.ov.open{opacity:1;pointer-events:all;}
+
+/* APP — centered content */
+.app{margin-left:var(--rail);padding:36px 0 130px;}
+.pg{display:none;max-width:var(--maxw);margin:0 auto;padding:0 clamp(22px,4vw,56px);}
+.pg.active{display:block;animation:fade .5s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1);}
+.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:.07s;}.d2{transition-delay:.14s;}.d3{transition-delay:.21s;}.d4{transition-delay:.28s;}
+
+/* BENTO HERO */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:26px;position:relative;overflow:hidden;box-shadow:var(--sh);}
+.b-main{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(155deg,#1E4632,#143020);border-color:transparent;min-height:330px;}
+.b-main .badge{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:rgba(200,241,105,.16);color:var(--lime);border:1px solid rgba(200,241,105,.3);padding:7px 14px;border-radius:100px;font-size:.74rem;font-weight:600;}
+.b-main h1{font-size:clamp(2.2rem,3.6vw,3.5rem);margin:18px 0;color:#F4F3EC;}
+.b-main h1 em{font-style:normal;color:var(--lime);}
+.b-main p{color:rgba(244,243,236,.82);max-width:420px;font-size:.98rem;}
+.b-main .cta{display:flex;gap:11px;flex-wrap:wrap;margin-top:22px;}
+.btn-lime{background:var(--lime);color:var(--ink-on);padding:14px 26px;border-radius:100px;font-weight:700;font-size:.9rem;display:inline-flex;align-items:center;gap:8px;transition:transform .22s,box-shadow .22s;}
+.btn-lime:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(169,219,78,.4);}
+.btn-lime span{transition:transform .22s;}.btn-lime:hover span{transform:translateX(4px);}
+.btn-gh{background:transparent;border:1.5px solid rgba(244,243,236,.3);color:#F4F3EC;padding:14px 24px;border-radius:100px;font-weight:600;font-size:.9rem;transition:all .22s;}
+.btn-gh:hover{border-color:var(--lime);color:var(--lime);}
+
+.b-art{grid-column:span 2;grid-row:span 2;padding:0;background:linear-gradient(165deg,#235030,#16331F);border-color:transparent;min-height:330px;}
+.b-art svg{position:absolute;inset:0;width:100%;height:100%;}
+.b-art .fruit{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);font-size:7rem;filter:drop-shadow(0 16px 26px rgba(0,0,0,.4));animation:bob 5s ease-in-out infinite;}
+.b-art .seal{position:absolute;top:18px;right:18px;width:78px;height:78px;animation:spin 24s linear infinite;}
+.b-art .cap{position:absolute;left:22px;bottom:20px;background:rgba(13,31,23,.72);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:9px 14px;font-size:.78rem;font-weight:600;color:#F4F3EC;}
+.b-art .cap small{display:block;color:var(--lime);font-size:.66rem;}
+
+.b-stat{display:flex;flex-direction:column;justify-content:center;}
+.b-stat.lime{background:var(--lime);color:var(--ink-on);border-color:transparent;}
+.b-stat .num{font-family:var(--disp);font-size:2.5rem;font-weight:800;line-height:1;}
+.b-stat .lbl{font-size:.76rem;font-weight:600;opacity:.72;margin-top:6px;}
+.b-feat{display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .25s,border-color .25s;}
+.b-feat:hover{transform:translateY(-4px);border-color:var(--grn);}
+.b-feat .fem{font-size:2.4rem;}
+.b-feat .fn{font-family:var(--disp);font-weight:700;font-size:1.05rem;margin-top:8px;}
+.b-feat .fp{color:var(--grn);font-weight:700;font-size:.92rem;}
+
+/* MARQUEE */
+.marquee{margin:18px 0 6px;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0;}
+.mq-track{display:flex;width:max-content;white-space:nowrap;animation:scrollx 28s linear infinite;}
+.marquee:hover .mq-track{animation-play-state:paused;}
+.mq-track span{font-family:var(--disp);font-weight:700;font-size:1.05rem;color:var(--muted);padding:0 22px;display:inline-flex;gap:22px;align-items:center;}
+.mq-track span::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--grn);}
+
+/* SECTION HEADER */
+.sec{margin-top:clamp(40px,6vw,72px);}
+.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:24px;flex-wrap:wrap;}
+.sec-hd .sub{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--grn);margin-bottom:9px;display:block;}
+.sec-hd h2{font-size:clamp(1.7rem,3vw,2.4rem);}
+.sec-hd h2 em{font-style:normal;color:var(--muted);}
+.sec-hd p{color:var(--muted);font-size:.9rem;max-width:440px;margin-top:6px;}
+.rail-link{color:var(--grn);font-weight:700;font-size:.86rem;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+.rail-link:hover{gap:10px;}
+
+/* RAIL */
+.rail{display:flex;gap:16px;overflow-x:auto;padding:6px 4px 18px;scroll-snap-type:x mandatory;}
+.rail>*{scroll-snap-align:start;flex:0 0 268px;}
+.rail-hint{font-size:.74rem;color:var(--muted2);margin-top:-6px;}
+
+/* PRODUCT CARD */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:16px;}
+.pcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:transform .28s cubic-bezier(.34,1.3,.64,1),border-color .28s,box-shadow .28s;display:flex;flex-direction:column;box-shadow:var(--sh);}
+.pcard:hover{transform:translateY(-6px);border-color:var(--grn);}
+.pimg{aspect-ratio:5/4;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.pimg svg{position:absolute;inset:0;width:100%;height:100%;}
+.pimg .em{position:relative;z-index:1;font-size:3.2rem;filter:drop-shadow(0 10px 16px rgba(0,0,0,.35));transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+.pcard:hover .pimg .em{transform:scale(1.14) rotate(6deg);}
+.pcat{position:absolute;top:11px;left:11px;z-index:2;background:rgba(13,31,23,.8);backdrop-filter:blur(5px);color:var(--lime);border:1px solid rgba(255,255,255,.14);border-radius:100px;font-size:.64rem;font-weight:700;letter-spacing:.04em;padding:4px 10px;}
+.pbadge{position:absolute;top:11px;right:11px;z-index:2;background:var(--tang);color:#fff;border-radius:100px;font-size:.62rem;font-weight:800;padding:4px 9px;}
+.pbody{padding:15px;display:flex;flex-direction:column;flex:1;}
+.pprod{font-size:.7rem;color:var(--muted);font-weight:500;margin-bottom:5px;}
+.pname{font-family:var(--disp);font-size:1.12rem;font-weight:700;margin-bottom:7px;}
+.pstars{display:flex;align-items:center;gap:5px;margin-bottom:13px;font-size:.74rem;color:var(--muted);}
+.pstars b{color:var(--grn);}
+.pfoot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;}
+.pprice{font-family:var(--disp);font-size:1.3rem;font-weight:800;}
+.pprice small{font-size:.66rem;color:var(--muted);font-weight:500;}
+.add{width:42px;height:42px;border-radius:13px;background:var(--lime);color:var(--ink-on);display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:transform .22s,background .22s;}
+.add:hover{transform:scale(1.1) rotate(90deg);background:var(--grn);color:#fff;}
+.qty{display:flex;align-items:center;gap:9px;background:var(--panel2);border-radius:13px;padding:5px 8px;}
+.qb{width:28px;height:28px;border-radius:9px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;transition:all .18s;}
+.qb:hover{background:var(--lime);color:var(--ink-on);border-color:transparent;}
+.qn{font-weight:800;min-width:18px;text-align:center;}
+
+/* FILTER */
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:24px;}
+.fil{padding:9px 17px;border-radius:100px;border:1px solid var(--line);font-size:.82rem;font-weight:600;color:var(--muted);background:var(--panel);transition:all .2s;}
+.fil:hover{color:var(--ink);border-color:var(--grn);}
+.fil.on{background:var(--grn);color:#fff;border-color:transparent;}
+
+/* HOW STEPS */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px 18px;transition:transform .25s,border-color .25s;box-shadow:var(--sh);}
+.step:hover{transform:translateY(-5px);border-color:var(--grn);}
+.step .n{font-family:var(--disp);font-size:2rem;font-weight:800;color:var(--grn);line-height:1;}
+.step .em{font-size:1.4rem;margin:10px 0 8px;}
+.step h4{font-size:1rem;}
+.step p{font-size:.76rem;color:var(--muted);margin-top:4px;}
+
+/* HOW PAGE timeline */
+.htl{max-width:720px;}
+.hstep{display:flex;gap:22px;margin-bottom:16px;}
+.hstep .left{flex-shrink:0;display:flex;flex-direction:column;align-items:center;}
+.hstep .n{width:58px;height:58px;border-radius:17px;background:var(--lime);color:var(--ink-on);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:1.4rem;font-weight:800;}
+.hstep .line{flex:1;width:2px;background:linear-gradient(var(--line),transparent);margin:6px 0;}
+.hstep .c{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;flex:1;margin-bottom:6px;box-shadow:var(--sh);}
+.hstep .c h4{font-size:1.15rem;margin-bottom:6px;}
+.hstep .c p{color:var(--muted);font-size:.9rem;}
+.tip{margin-top:11px;padding:10px 14px;background:rgba(46,122,69,.1);border-left:3px solid var(--grn);border-radius:10px;font-size:.8rem;color:var(--grn);font-weight:600;}
+
+/* CALENDAR */
+.cal{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;}
+.cal-c{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;text-align:center;transition:transform .25s;box-shadow:var(--sh);}
+.cal-c:hover{transform:translateY(-5px);}
+.cal-c .mon{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tang);margin-bottom:10px;}
+.cal-c .em{font-size:2.1rem;}
+.cal-c .pn{font-family:var(--disp);font-weight:700;font-size:1rem;margin-top:8px;}
+.cal-c .tg{font-size:.7rem;color:var(--muted);margin-top:3px;}
+
+/* PRODUCER */
+.prgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;}
+.prcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;transition:transform .28s,border-color .28s;box-shadow:var(--sh);}
+.prcard:hover{transform:translateY(-6px);border-color:var(--grn);}
+.prtop{height:104px;position:relative;display:flex;align-items:flex-end;justify-content:flex-start;padding:0 22px;}
+.prtop svg{position:absolute;inset:0;width:100%;height:100%;}
+.prav{position:relative;z-index:1;width:74px;height:74px;border-radius:20px;background:#fff;border:2px solid var(--lime);display:flex;align-items:center;justify-content:center;font-size:2.1rem;transform:translateY(34px);transition:transform .3s;box-shadow:0 8px 18px rgba(0,0,0,.18);}
+.prcard:hover .prav{transform:translateY(34px) rotate(-6deg);}
+.prwax{position:absolute;top:14px;right:14px;z-index:2;display:inline-flex;align-items:center;gap:5px;background:rgba(13,31,23,.72);border:1px solid rgba(255,255,255,.14);border-radius:100px;padding:5px 11px;font-size:.66rem;font-weight:700;color:var(--lime);}
+.prb{padding:46px 22px 22px;}
+.prname{font-family:var(--disp);font-size:1.25rem;font-weight:700;}
+.prloc{font-size:.76rem;color:var(--muted);margin-bottom:13px;}
+.prrow{display:flex;align-items:center;gap:14px;margin-bottom:13px;}
+.prscore{font-family:var(--disp);font-size:1.7rem;font-weight:800;color:var(--grn);}
+.prscore small{font-size:.7rem;color:var(--muted);font-weight:500;display:block;}
+.prtags{display:flex;flex-wrap:wrap;gap:6px;}
+.ptag{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:100px;font-size:.68rem;font-weight:600;padding:3px 11px;}
+.prquote{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:.86rem;color:var(--muted);font-style:italic;}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1fr 1.1fr;gap:32px;align-items:center;}
+.about-art{position:relative;aspect-ratio:1;border-radius:var(--r2);overflow:hidden;background:linear-gradient(165deg,#235030,#16331F);border:1px solid var(--line);box-shadow:var(--sh);}
+.about-art svg{position:absolute;inset:0;width:100%;height:100%;}
+.about-art .em{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-size:5.5rem;}
+.about-c .sub{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--grn);display:block;margin-bottom:12px;}
+.about-c h2{font-size:clamp(1.7rem,3vw,2.5rem);margin-bottom:16px;}
+.about-c h2 em{font-style:normal;color:var(--grn);}
+.about-c p{color:var(--muted);margin-bottom:14px;font-size:.95rem;line-height:1.8;}
+.about-c .pull{color:var(--grn);font-family:var(--disp);font-weight:700;font-size:1.2rem;border-left:3px solid var(--grn);padding-left:16px;font-style:normal;}
+.vals{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;}
+.val{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px;transition:transform .25s;box-shadow:var(--sh);}
+.val:hover{transform:translateY(-5px);}
+.val .vi{width:50px;height:50px;border-radius:14px;background:rgba(46,122,69,.12);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:13px;}
+.val h4{font-size:1.08rem;margin-bottom:6px;}
+.val p{font-size:.82rem;color:var(--muted);}
+
+/* CONTACT */
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.ccard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:32px;box-shadow:var(--sh);}
+.ccard .ci{width:56px;height:56px;border-radius:16px;background:rgba(46,122,69,.1);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:16px;}
+.ccard h3{font-size:1.3rem;margin-bottom:8px;}
+.ccard .cd{color:var(--muted);font-size:.88rem;margin-bottom:20px;line-height:1.7;}
+.wa-big{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px;border-radius:100px;background:#25D366;color:#06281A;font-weight:700;transition:transform .22s;}
+.wa-big:hover{transform:translateY(-3px);}
+.clist{display:flex;flex-direction:column;gap:15px;}
+.ci-row{display:flex;align-items:flex-start;gap:13px;}
+.ci-row .i{width:40px;height:40px;border-radius:12px;background:var(--panel2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.ci-row .l{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);}
+.ci-row .v{font-family:var(--disp);font-weight:600;}
+
+/* CART DRAWER */
+.drov{position:fixed;inset:0;background:rgba(23,42,32,.45);backdrop-filter:blur(3px);z-index:90;opacity:0;pointer-events:none;transition:opacity .35s;}
+.drov.open{opacity:1;pointer-events:all;}
+.drawer{position:fixed;top:0;right:-460px;bottom:0;width:min(440px,100vw);background:var(--bg);border-left:1px solid var(--line);z-index:91;transition:right .4s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-20px 0 50px rgba(23,42,32,.18);}
+.drawer.open{right:0;}
+.dr-hd{padding:24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);}
+.dr-hd h3{font-size:1.4rem;}
+.dr-cl{width:40px;height:40px;border-radius:12px;background:var(--panel);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.dr-cl:hover{background:var(--tang);color:#fff;transform:rotate(90deg);}
+.dr-its{flex:1;overflow-y:auto;padding:16px 24px;}
+.dr-emp{text-align:center;padding:60px 20px;}
+.dr-emp .e{font-size:3.2rem;margin-bottom:12px;}
+.dr-emp p{color:var(--muted);font-size:.9rem;}
+.dit{display:flex;gap:13px;padding:14px 0;border-bottom:1px solid var(--line);align-items:center;}
+.dit .e{width:50px;height:50px;border-radius:13px;background:var(--panel);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.9rem;}
+.dit .nm{font-family:var(--disp);font-weight:700;}
+.dit .pr{color:var(--grn);font-weight:700;font-size:.84rem;}
+.dit .rm{color:var(--muted2);font-size:.72rem;cursor:pointer;margin-left:6px;}
+.dit .rm:hover{color:var(--tang);}
+.dr-ft{padding:22px 24px;border-top:1px solid var(--line);background:var(--panel2);}
+.dr-tot{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;}
+.dr-tot .v{font-family:var(--disp);font-size:1.5rem;font-weight:800;}
+
+/* STICKY CART BAR */
+.cbar{position:fixed;left:calc(var(--rail) + 24px);right:24px;bottom:22px;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:20px;padding:14px 18px;display:flex;align-items:center;gap:16px;box-shadow:0 16px 40px rgba(23,42,32,.16);transform:translateY(140px);opacity:0;transition:transform .4s cubic-bezier(.34,1.3,.64,1),opacity .3s;}
+.cbar.show{transform:none;opacity:1;}
+.cbar .ic{width:46px;height:46px;border-radius:14px;background:var(--lime);color:var(--ink-on);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+.cbar .info{flex:1;line-height:1.25;}
+.cbar .info b{font-family:var(--disp);font-size:1.05rem;}
+.cbar .info small{display:block;color:var(--muted);font-size:.78rem;}
+.cbar .total{font-family:var(--disp);font-size:1.35rem;font-weight:800;color:var(--grn);}
+.cbar .view{background:var(--panel2);border:1px solid var(--line);padding:11px 18px;border-radius:13px;font-weight:600;font-size:.86rem;transition:all .2s;}
+.cbar .view:hover{background:var(--panel3);}
+.cbar .order{background:var(--lime);color:var(--ink-on);padding:12px 22px;border-radius:13px;font-weight:700;font-size:.88rem;display:inline-flex;align-items:center;gap:7px;transition:transform .2s;}
+.cbar .order:hover{transform:translateY(-2px);}
+
+/* TOAST */
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(40px);z-index:120;background:var(--ink);color:var(--cream);padding:13px 22px;border-radius:100px;font-weight:700;font-size:.86rem;display:flex;align-items:center;gap:9px;opacity:0;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .3s;box-shadow:0 10px 30px rgba(23,42,32,.3);}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+/* FOOTER */
+.foot{margin-top:60px;border-top:1px solid var(--line);padding-top:30px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.foot p{font-size:.78rem;color:var(--muted2);}
+.foot .fwa{display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#06281A;border-radius:100px;padding:9px 18px;font-weight:700;font-size:.8rem;}
+
+@keyframes bob{0%,100%{transform:translate(-50%,-50%);}50%{transform:translate(-50%,-62%);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes scrollx{to{transform:translateX(-50%);}}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .bento{grid-template-columns:repeat(2,1fr);}
+  .b-main,.b-art{grid-column:span 2;grid-row:auto;min-height:auto;}
+  .b-art{min-height:300px;}
+  .steps{grid-template-columns:repeat(3,1fr);}
+  .about{grid-template-columns:1fr;}
+}
+@media(max-width:860px){
+  .sidebar{transform:translateX(-100%);width:260px;}
+  .sidebar.open{transform:none;}
+  .mtop{display:flex;}
+  .app{margin-left:0;padding:84px 0 130px;}
+  .cbar{left:14px;right:14px;}
+  .cgrid{grid-template-columns:1fr;}
+  .vals{grid-template-columns:1fr;}
+}
+@media(max-width:560px){
+  .bento{grid-template-columns:1fr;}
+  .b-main,.b-art{grid-column:span 1;}
+  .steps{grid-template-columns:1fr 1fr;}
+  .pgrid{grid-template-columns:1fr 1fr;}
+  .cbar{flex-wrap:wrap;}
+  .cbar .info{flex-basis:auto;}
+  .cbar .view{display:none;}
+}
+@media(max-width:400px){.pgrid{grid-template-columns:1fr;}.steps{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-logo" onclick="show('home')">
+    <div class="mark">
+      <svg width="24" height="24" viewBox="0 0 36 36" fill="none"><rect x="6" y="5" width="3.5" height="26" rx="1" fill="#0D1F17"/><rect x="26.5" y="5" width="3.5" height="26" rx="1" fill="#0D1F17"/><rect x="9.5" y="17" width="17" height="3.5" rx="1" fill="#0D1F17"/><line x1="18" y1="4" x2="18" y2="15" stroke="#0D1F17" stroke-width="2"/><line x1="18" y1="7" x2="13" y2="11" stroke="#0D1F17" stroke-width="1.6"/><line x1="18" y1="7" x2="23" y2="11" stroke="#0D1F17" stroke-width="1.6"/></svg>
+    </div>
+    <div><b>HASAD</b><small>köyden sofraya</small></div>
+  </div>
+  <nav class="sb-nav">
+    <a href="#" data-pg="home" onclick="show('home');return false"><span class="ic">🏠</span> Ana Sayfa</a>
+    <a href="#" data-pg="products" onclick="show('products');return false"><span class="ic">🧺</span> Ürünler</a>
+    <a href="#" data-pg="producers" onclick="show('producers');return false"><span class="ic">🌾</span> Üreticiler</a>
+    <a href="#" data-pg="how" onclick="show('how');return false"><span class="ic">📦</span> Nasıl Çalışır?</a>
+    <a href="#" data-pg="about" onclick="show('about');return false"><span class="ic">🌿</span> Hakkımızda</a>
+    <a href="#" data-pg="contact" onclick="show('contact');return false"><span class="ic">💬</span> İletişim</a>
+  </nav>
+  <div class="sb-foot">
+    <a class="sb-wa" href="https://wa.me/905XXXXXXXXX" target="_blank">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="#06281A"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347Z"/></svg>
+      WhatsApp Sipariş
+    </a>
+    <div class="sb-meta">Arguvan / Malatya<br>Pzt – Per arası sipariş</div>
+  </div>
+</aside>
+
+<!-- MOBILE TOP -->
+<div class="mtop">
+  <div class="mlogo" onclick="show('home')"><div class="mark"><svg width="20" height="20" viewBox="0 0 36 36"><rect x="6" y="5" width="3.5" height="26" rx="1" fill="#0D1F17"/><rect x="26.5" y="5" width="3.5" height="26" rx="1" fill="#0D1F17"/><rect x="9.5" y="17" width="17" height="3.5" rx="1" fill="#0D1F17"/></svg></div> HASAD</div>
+  <button class="burger" onclick="toggleNav()" aria-label="Menü"><span></span><span></span><span></span></button>
+</div>
+<div class="ov" id="ov" onclick="toggleNav()"></div>
+
+<!-- APP -->
+<div class="app">
+
+<!-- HOME -->
+<div class="pg active" id="pg-home">
+  <div class="bento">
+    <div class="tile b-main reveal">
+      <span class="badge">🌿 Malatya'dan İstanbul'a, elden ele</span>
+      <h1>Köyden seçildi,<br><em>sofranıza</em> ulaştı.</h1>
+      <p>Anadolu'nun güvenilir köy üreticilerinden, sizin için tek tek seçilmiş doğal ürünler. Her ürünün arkasında bir isim, bir köy, bir hikâye.</p>
+      <div class="cta">
+        <button class="btn-lime" onclick="show('products')">Ürünleri Keşfet <span>→</span></button>
+        <button class="btn-gh" onclick="show('how')">Nasıl Çalışır?</button>
+      </div>
+    </div>
+    <div class="tile b-art reveal d2">
+      <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+        <circle cx="300" cy="86" r="44" fill="#C8F169" opacity=".85"/>
+        <circle cx="300" cy="86" r="60" fill="none" stroke="#C8F169" stroke-width="2" stroke-dasharray="3 9" opacity=".5"/>
+        <path d="M0 300 Q100 256 210 292 T400 276 V400 H0 Z" fill="#2C5A38"/>
+        <path d="M0 340 Q120 304 250 336 T400 322 V400 H0 Z" fill="#3A7049"/>
+        <path d="M0 372 Q140 348 280 368 T400 360 V400 H0 Z" fill="#48895A"/>
+      </svg>
+      <div class="fruit">🍑</div>
+      <svg class="seal" viewBox="0 0 100 100"><g fill="#C8F169"><path d="M50 6 53 16 63 11 62 22 73 21 67 30 77 33 68 39 75 47 64 48 67 59 57 55 55 66 50 57 45 66 43 55 33 59 36 48 25 47 32 39 23 33 33 30 27 21 38 22 37 11 47 16Z"/></g><circle cx="50" cy="38" r="21" fill="#0D1F17"/><text x="50" y="35" text-anchor="middle" font-family="Syne,sans-serif" font-size="8.5" font-weight="800" fill="#C8F169">ÜRETİCİ</text><text x="50" y="45" text-anchor="middle" font-family="Syne,sans-serif" font-size="8.5" font-weight="800" fill="#C8F169">ONAYLI</text></svg>
+      <div class="cap">Malatya Kayısısı<small>bu hafta taze hasat</small></div>
+    </div>
+    <div class="tile b-stat lime reveal d1"><div class="num" data-count="60" data-suf="+">0</div><div class="lbl">Köy Üreticisi</div></div>
+    <div class="tile b-stat reveal d2"><div class="num" data-count="12">0</div><div class="lbl">Mevsim Ürünü</div></div>
+    <div class="tile b-feat reveal d3" onclick="show('products')"><div><div class="fem">🍯</div><div class="fn">Çiçek Balı</div></div><div class="fp">220 TL <small style="color:var(--muted);font-weight:500">/ kg</small></div></div>
+    <div class="tile b-stat reveal d4"><div class="num" data-count="100" data-pre="%">0</div><div class="lbl">Doğal & Katkısız</div></div>
+  </div>
+
+  <div class="marquee"><div class="mq-track" id="mqt"></div></div>
+
+  <section class="sec">
+    <div class="sec-hd reveal">
+      <div><span class="sub">Bu Hafta</span><h2>Öne Çıkan <em>Ürünler</em></h2></div>
+      <a class="rail-link" href="#" onclick="show('products');return false">Tümünü gör →</a>
+    </div>
+    <div class="rail" id="featuredRail"></div>
+    <div class="rail-hint">← yana kaydırarak daha fazlasını gör →</div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-hd reveal"><div><span class="sub">Süreç</span><h2>5 adımda <em>kapına gelir</em></h2></div></div>
+    <div class="steps">
+      <div class="step reveal d1"><div class="n">1</div><div class="em">🛒</div><h4>Seç</h4><p>Listeden sepete ekle</p></div>
+      <div class="step reveal d2"><div class="n">2</div><div class="em">💬</div><h4>Gönder</h4><p>WhatsApp'tan ilet</p></div>
+      <div class="step reveal d3"><div class="n">3</div><div class="em">🏦</div><h4>Öde</h4><p>IBAN'a havale</p></div>
+      <div class="step reveal d4"><div class="n">4</div><div class="em">📦</div><h4>Paketle</h4><p>Kraft ambalaj</p></div>
+      <div class="step reveal d4"><div class="n">5</div><div class="em">🚚</div><h4>Teslim</h4><p>Aras Kargo, 2 gün</p></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-hd reveal"><div><span class="sub">Mevsim Bizden Yana</span><h2>Hasat <em>Takvimi</em></h2><p>Doğa ne zaman verirse o zaman gönderiyoruz.</p></div></div>
+    <div class="cal">
+      <div class="cal-c reveal d1"><div class="mon">Haziran</div><div class="em">🍑</div><div class="pn">Yaş Kayısı</div><div class="tg">Hasat zamanı</div></div>
+      <div class="cal-c reveal d2"><div class="mon">Temmuz</div><div class="em">🍯</div><div class="pn">Çiçek Balı</div><div class="tg">Süzme dönemi</div></div>
+      <div class="cal-c reveal d3"><div class="mon">Ağustos</div><div class="em">🍫</div><div class="pn">Pestil</div><div class="tg">Güneşte kurur</div></div>
+      <div class="cal-c reveal d4"><div class="mon">Ekim</div><div class="em">🫒</div><div class="pn">Zeytinyağı</div><div class="tg">Soğuk sıkım</div></div>
+      <div class="cal-c reveal d4"><div class="mon">Tüm yıl</div><div class="em">🥚</div><div class="pn">Köy Yumurtası</div><div class="tg">Her gün taze</div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-hd reveal"><div><span class="sub">Üreticilerimiz</span><h2>Her ürünün bir <em>yüzü</em> var</h2></div><a class="rail-link" href="#" onclick="show('producers');return false">Tümünü gör →</a></div>
+    <div class="rail" id="spotRail"></div>
+  </section>
+
+  <div class="foot">
+    <p>© 2025 HASAD · Köyden sofraya, sevgiyle 🌿 · Arguvan / Malatya</p>
+    <a class="fwa" href="https://wa.me/905XXXXXXXXX" target="_blank">💬 WhatsApp ile Sipariş</a>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="pg" id="pg-products">
+  <div class="sec-hd reveal" style="margin-top:6px"><div><span class="sub">Haftalık Liste</span><h2>Tüm <em>Ürünler</em></h2><p>Her ürün bizzat ziyaret ettiğimiz üreticilerden. Fiyatlar haftalık güncellenir.</p></div></div>
+  <div class="filters" id="filters"></div>
+  <div class="pgrid" id="allPGrid"></div>
+</div>
+
+<!-- PRODUCERS -->
+<div class="pg" id="pg-producers">
+  <div class="sec-hd reveal" style="margin-top:6px"><div><span class="sub">Üretici Ağı</span><h2>Güvenilir <em>Üreticilerimiz</em></h2><p>Her birini bizzat ziyaret ettik, tattık ve onayladık.</p></div></div>
+  <div class="prgrid" id="allPrGrid"></div>
+</div>
+
+<!-- HOW -->
+<div class="pg" id="pg-how">
+  <div class="sec-hd reveal" style="margin-top:6px"><div><span class="sub">Süreç</span><h2>Nasıl <em>Çalışır?</em></h2><p>Sipariş talebinden kapınıza kadar her adım şeffaf.</p></div></div>
+  <div class="htl">
+    <div class="hstep reveal"><div class="left"><div class="n">1</div><div class="line"></div></div><div class="c"><h4>Sepete ekleyin</h4><p>Haftalık listeden istediğiniz ürünleri sepete ekleyin. Yanında üretici, köy ve puan görünür.</p><div class="tip">💡 Stok sınırlı olabilir, erken sipariş önerilir.</div></div></div>
+    <div class="hstep reveal"><div class="left"><div class="n">2</div><div class="line"></div></div><div class="c"><h4>WhatsApp ile iletin</h4><p>Sepetiniz otomatik mesaja dönüşür. "Sipariş Ver"e basın, hazır mesajı gönderin.</p></div></div>
+    <div class="hstep reveal"><div class="left"><div class="n">3</div><div class="line"></div></div><div class="c"><h4>Stok kontrolü & onay</h4><p>Yönetici stok durumunu kontrol eder, toplam tutarı bildirir. Genellikle 1–2 saat içinde yanıt.</p></div></div>
+    <div class="hstep reveal"><div class="left"><div class="n">4</div><div class="line"></div></div><div class="c"><h4>Ödeme yapın</h4><p>IBAN'a havale yapıp dekontu WhatsApp'tan gönderin.</p><div class="tip">🏦 IBAN: TR00 0000 0000 0000 00</div></div></div>
+    <div class="hstep reveal"><div class="left"><div class="n">5</div><div class="line"></div></div><div class="c"><h4>Özenle paketlenir</h4><p>Kraft kutu, keten bez ve kişisel not kartıyla hazırlanır. Her kutuya küçük bir sürpriz.</p></div></div>
+    <div class="hstep reveal"><div class="left"><div class="n">6</div></div><div class="c"><h4>Kapınıza gelir</h4><p>2 iş günü içinde Aras Kargo ile teslim. Takip numarası SMS ile iletilir.</p><div class="tip">📲 3 gün sonra ürünleri değerlendirin — puanınız üreticimizi motive eder!</div></div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="pg" id="pg-about">
+  <div class="about" style="margin-top:6px">
+    <div class="about-art reveal"><svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><circle cx="300" cy="90" r="48" fill="#C8F169" opacity=".85"/><path d="M0 300 Q100 256 210 292 T400 276 V400 H0 Z" fill="#2C5A38"/><path d="M0 348 Q130 308 260 340 T400 326 V400 H0 Z" fill="#48895A"/></svg><div class="em">🌿</div></div>
+    <div class="about-c reveal">
+      <span class="sub">Hikâyemiz</span>
+      <h2>Köyden şehre bir <em>köprü</em></h2>
+      <p>Malatya'da 600 kayısı ağacım, 500 tavuğum var. Yıllarca bu topraklardan elde ettiğimiz ürünleri sadece kendi ailemiz için ürettik.</p>
+      <p class="pull">"Malatya'da harika ürünler var, İstanbul'da harika insanlar — ama bu ikisi hiç buluşmuyor."</p>
+      <p>HASAD bu köprüyü kurmak için doğdu. Her üreticiyi bizzat ziyaret ediyor, tadıyor ve onaylıyorum. Beğenmediğimi göndermiyorum — bu benim garantim.</p>
+      <button class="btn-lime" onclick="show('contact')" style="margin-top:8px">Bize Ulaşın <span>→</span></button>
+    </div>
+  </div>
+  <div class="vals">
+    <div class="val reveal d1"><div class="vi">👁️</div><h4>Şeffaflık</h4><p>Her ürünün üreticisi, köyü ve puanı açıkça görünür.</p></div>
+    <div class="val reveal d2"><div class="vi">🤝</div><h4>Güven</h4><p>Beğenmezseniz ürün sizde kalır, paranız iade edilir.</p></div>
+    <div class="val reveal d3"><div class="vi">🌱</div><h4>Üreticiye Değer</h4><p>Puan sistemiyle en iyi üretici daha yüksek fiyatla satar.</p></div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="pg" id="pg-contact">
+  <div class="sec-hd reveal" style="margin-top:6px"><div><span class="sub">İletişim</span><h2>Bize <em>Ulaşın</em></h2><p>Sipariş, soru veya sadece merhaba demek için buradayız.</p></div></div>
+  <div class="cgrid">
+    <div class="ccard reveal d1">
+      <div class="ci">💬</div><h3>WhatsApp ile Sipariş</h3>
+      <div class="cd">En hızlı yol WhatsApp. Ürün listesini paylaşın, birlikte siparişinizi hazırlayalım. 1–2 saat içinde yanıt veriyoruz.</div>
+      <a class="wa-big" href="https://wa.me/905XXXXXXXXX" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#06281A"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347Z"/></svg>
+        WhatsApp'ta Yaz
+      </a>
+    </div>
+    <div class="ccard reveal d2">
+      <div class="ci">📋</div><h3>İletişim Bilgileri</h3>
+      <div class="clist">
+        <div class="ci-row"><div class="i">📱</div><div><div class="l">WhatsApp & Telefon</div><div class="v">0(5XX) XXX XX XX</div></div></div>
+        <div class="ci-row"><div class="i">📍</div><div><div class="l">Üretim Yeri</div><div class="v">Arguvan / Malatya</div></div></div>
+        <div class="ci-row"><div class="i">🚚</div><div><div class="l">Teslimat</div><div class="v">Türkiye geneli — Aras Kargo</div></div></div>
+        <div class="ci-row"><div class="i">📅</div><div><div class="l">Sipariş Günleri</div><div class="v">Pazartesi – Perşembe</div></div></div>
+        <div class="ci-row"><div class="i">🌐</div><div><div class="l">Web</div><div class="v">hasad.co</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<!-- CART DRAWER -->
+<div class="drov" id="drov" onclick="toggleCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="dr-hd"><h3>🧺 Sepetim</h3><button class="dr-cl" onclick="toggleCart()">✕</button></div>
+  <div class="dr-its" id="drits"><div class="dr-emp"><div class="e">🧺</div><p>Sepetiniz henüz boş.<br>Köyün en tazesini keşfedin.</p></div></div>
+  <div class="dr-ft" id="drft" style="display:none">
+    <div class="dr-tot"><span style="color:var(--muted)">Toplam</span><span class="v" id="drtot">0 TL</span></div>
+    <button class="wa-big" onclick="orderWA()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#06281A"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347Z"/></svg>
+      WhatsApp ile Sipariş Ver
+    </button>
+  </div>
+</div>
+
+<!-- STICKY CART BAR -->
+<div class="cbar" id="cbar">
+  <div class="ic">🧺</div>
+  <div class="info"><b id="cbCount">0 ürün</b><small>sepetinde bekliyor</small></div>
+  <div class="total" id="cbTotal">0 TL</div>
+  <button class="view" onclick="toggleCart()">Sepeti Gör</button>
+  <button class="order" onclick="orderWA()">Sipariş Ver <span>→</span></button>
+</div>
+
+<div class="toast" id="toast"><span>🧺</span><span id="toastTxt">Sepete eklendi</span></div>
+
+<script>
+const PRODS=[
+  {id:1,name:'Yaş Kayısı',em:'🍑',cat:'Kayısı',pr:'Kendi Üretim',vl:'Arguvan / Malatya',price:80,unit:'kg',rat:4.9,rev:42,bdg:'Taze'},
+  {id:2,name:'Kuru Kayısı',em:'🍑',cat:'Kayısı',pr:'Kendi Üretim',vl:'Arguvan / Malatya',price:180,unit:'kg',rat:4.8,rev:38,bdg:'Çok Satan'},
+  {id:3,name:'Kayısı Pekmezi',em:'🍯',cat:'Kayısı',pr:'Ayşe Hanım',vl:'Arguvan / Malatya',price:120,unit:'kg',rat:4.8,rev:29,bdg:'Sınırlı'},
+  {id:4,name:'Kayısı Pestili',em:'🍫',cat:'Kayısı',pr:'Ayşe Hanım',vl:'Arguvan / Malatya',price:140,unit:'kg',rat:4.7,rev:18,bdg:''},
+  {id:5,name:'Köy Yumurtası',em:'🥚',cat:'Yumurta',pr:'Kendi Üretim',vl:'Arguvan / Malatya',price:8,unit:'adet',rat:4.9,rev:61,bdg:'Taze'},
+  {id:6,name:'Çiçek Balı',em:'🍯',cat:'Köy Ürünleri',pr:'Mahmut Bey',vl:'Sivrice / Elazığ',price:220,unit:'kg',rat:4.9,rev:47,bdg:'Doğal'},
+  {id:7,name:'Tulum Peyniri',em:'🧀',cat:'Köy Ürünleri',pr:'Fatma Hanım',vl:'Refahiye / Erzincan',price:280,unit:'kg',rat:4.7,rev:33,bdg:'Sınırlı'},
+  {id:8,name:'Köy Tereyağı',em:'🧈',cat:'Köy Ürünleri',pr:'Fatma Hanım',vl:'Refahiye / Erzincan',price:320,unit:'kg',rat:4.8,rev:21,bdg:''},
+  {id:9,name:'Ev Tarhanası',em:'🥣',cat:'Köy Ürünleri',pr:'Hüseyin Bey',vl:'Kahramanmaraş',price:90,unit:'kg',rat:4.6,rev:15,bdg:''},
+  {id:10,name:'Ev Reçeli',em:'🍓',cat:'Köy Ürünleri',pr:'Zehra Hanım',vl:'Bolu / Merkez',price:85,unit:'kavanoz',rat:4.6,rev:12,bdg:'Sınırlı'},
+  {id:11,name:'Sızma Zeytinyağı',em:'🫒',cat:'Zeytinyağı',pr:'Mehmet Bey',vl:'Edremit / Balıkesir',price:350,unit:'lt',rat:4.8,rev:24,bdg:'Soğuk Sıkım'},
+  {id:12,name:'Kekik Balı',em:'🍯',cat:'Köy Ürünleri',pr:'Mahmut Bey',vl:'Sivrice / Elazığ',price:240,unit:'kg',rat:4.8,rev:19,bdg:''},
+];
+const PRODUCERS=[
+  {name:'Ayşe Hanım',em:'👩‍🌾',vl:'Arguvan / Malatya',bdg:'Usta',score:4.8,rev:76,prods:['Kayısı Pekmezi','Pestil'],quote:'"Çocuğum kaşıkla yedi, bayıldı!"'},
+  {name:'Mahmut Bey',em:'👨‍🌾',vl:'Sivrice / Elazığ',bdg:'Usta',score:4.9,rev:47,prods:['Çiçek Balı','Kekik Balı'],quote:'"30 yıldır bu işi yapıyorum."'},
+  {name:'Fatma Hanım',em:'👩‍🌾',vl:'Refahiye / Erzincan',bdg:'Güvenilir',score:4.7,rev:54,prods:['Tulum Peyniri','Tereyağı'],quote:'"Fırında eridi, muhteşemdi!"'},
+  {name:'Hüseyin Bey',em:'👨‍🌾',vl:'Kahramanmaraş',bdg:'Güvenilir',score:4.6,rev:28,prods:['Tarhana','İsot'],quote:'"Kış ayları en verimli dönem."'},
+  {name:'Zehra Hanım',em:'👩‍🌾',vl:'Bolu / Merkez',bdg:'Yeni',score:4.6,rev:12,prods:['Ev Reçeli'],quote:'"Her kavanoz ayrı özen ister."'},
+  {name:'Mehmet Bey',em:'👨‍🌾',vl:'Edremit / Balıkesir',bdg:'Güvenilir',score:4.8,rev:24,prods:['Sızma Zeytinyağı'],quote:'"Soğuk sıkımı asla fark eder."'},
+];
+
+function scn(){return `<svg viewBox="0 0 200 160" preserveAspectRatio="xMidYMid slice"><rect width="200" height="160" fill="#16331F"/><circle cx="160" cy="34" r="20" fill="#C8F169" opacity=".55"/><path d="M0 118 Q60 94 110 114 T200 106 V160 H0 Z" fill="#2C5A38"/><path d="M0 138 Q70 118 130 134 T200 128 V160 H0 Z" fill="#48895A" opacity=".8"/></svg>`;}
+function starStr(r){let s='';for(let i=0;i<5;i++)s+=i<Math.round(r)?'★':'☆';return s;}
+
+let cart={};
+let curFilter='Tümü';
+
+function pCard(p){
+  const q=cart[p.id]?.qty||0;
+  return `<div class="pcard">
+    <div class="pimg">${scn()}<span class="em">${p.em}</span><span class="pcat">${p.cat}</span>${p.bdg?`<span class="pbadge">${p.bdg}</span>`:''}</div>
+    <div class="pbody">
+      <div class="pprod">📍 ${p.pr} · ${p.vl}</div>
+      <div class="pname">${p.name}</div>
+      <div class="pstars"><b>${starStr(p.rat)}</b> ${p.rat} (${p.rev})</div>
+      <div class="pfoot">
+        <div class="pprice">${p.price.toLocaleString('tr-TR')} TL <small>/ ${p.unit}</small></div>
+        ${q>0?`<div class="qty"><button class="qb" onclick="chg(${p.id},-1)">−</button><span class="qn">${q}</span><button class="qb" onclick="chg(${p.id},1)">+</button></div>`:`<button class="add" onclick="add(${p.id})">+</button>`}
+      </div>
+    </div>
+  </div>`;
+}
+function prCard(p){
+  return `<div class="prcard">
+    <div class="prtop"><svg viewBox="0 0 300 104" preserveAspectRatio="xMidYMid slice"><rect width="300" height="104" fill="#1C3F2E"/><circle cx="252" cy="26" r="20" fill="#C8F169" opacity=".5"/><path d="M0 80 Q90 56 170 76 T300 70 V104 H0 Z" fill="#2C5A38"/></svg><div class="prav">${p.em}</div><span class="prwax">✓ ${p.bdg}</span></div>
+    <div class="prb">
+      <div class="prname">${p.name}</div>
+      <div class="prloc">📍 ${p.vl}</div>
+      <div class="prrow"><div class="prscore">${p.score}<small>${p.rev} puan</small></div><div style="color:var(--grn);font-size:.9rem;letter-spacing:1px">${starStr(p.score)}</div></div>
+      <div class="prtags">${p.prods.map(x=>`<span class="ptag">${x}</span>`).join('')}</div>
+      <div class="prquote">${p.quote}</div>
+    </div>
+  </div>`;
+}
+function rf(id,h){const e=document.getElementById(id);if(e)e.innerHTML=h;}
+
+function renderProducts(){
+  const list=curFilter==='Tümü'?PRODS:PRODS.filter(p=>p.cat===curFilter);
+  rf('allPGrid',list.map(pCard).join(''));
+}
+function renderFilters(){
+  const cats=['Tümü',...new Set(PRODS.map(p=>p.cat))];
+  rf('filters',cats.map(c=>`<button class="fil ${c===curFilter?'on':''}" onclick="setFilter('${c}')">${c}</button>`).join(''));
+}
+function setFilter(c){curFilter=c;renderFilters();renderProducts();}
+
+function renderAll(){
+  rf('featuredRail',PRODS.slice(0,6).map(pCard).join(''));
+  rf('spotRail',PRODUCERS.slice(0,4).map(prCard).join(''));
+  rf('allPrGrid',PRODUCERS.map(prCard).join(''));
+  renderFilters();renderProducts();
+}
+function buildMq(){const it=PRODS.map(p=>`<span>${p.em} ${p.name}</span>`).join('');rf('mqt',it+it);}
+
+let toastT;
+function toast(m){const t=document.getElementById('toast');document.getElementById('toastTxt').textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1800);}
+
+function add(id){const p=PRODS.find(x=>x.id===id);if(!p)return;if(!cart[id])cart[id]={...p,qty:0};cart[id].qty++;toast(`${p.name} eklendi`);upd();renderAll();}
+function chg(id,d){if(!cart[id])return;cart[id].qty+=d;if(cart[id].qty<=0)delete cart[id];upd();renderAll();}
+
+function upd(){
+  const cnt=Object.values(cart).reduce((s,i)=>s+i.qty,0);
+  const sum=Object.values(cart).reduce((s,i)=>s+i.price*i.qty,0);
+  const cbar=document.getElementById('cbar');
+  cbar.classList.toggle('show',cnt>0);
+  document.getElementById('cbCount').textContent=cnt+' ürün';
+  document.getElementById('cbTotal').textContent=sum.toLocaleString('tr-TR')+' TL';
+  document.getElementById('drtot').textContent=sum.toLocaleString('tr-TR')+' TL';
+  const its=document.getElementById('drits'),ft=document.getElementById('drft');
+  if(!Object.keys(cart).length){its.innerHTML=`<div class="dr-emp"><div class="e">🧺</div><p>Sepetiniz henüz boş.<br>Köyün en tazesini keşfedin.</p></div>`;ft.style.display='none';}
+  else{ft.style.display='block';its.innerHTML=Object.values(cart).map(i=>`<div class="dit"><div class="e">${i.em}</div><div style="flex:1"><div class="nm">${i.name}</div><div class="pr">${(i.price*i.qty).toLocaleString('tr-TR')} TL</div><div class="cit-qty" style="display:flex;align-items:center;gap:8px;margin-top:6px"><button class="qb" onclick="chg(${i.id},-1)">−</button><span class="qn">${i.qty}</span><button class="qb" onclick="chg(${i.id},1)">+</button><span class="rm" onclick="chg(${i.id},-99)">Kaldır</span></div></div></div>`).join('');}
+}
+
+function orderWA(){
+  if(!Object.keys(cart).length){toast('Sepetiniz boş');return;}
+  let msg='*HASAD Sipariş*\n\n';
+  Object.values(cart).forEach(i=>{msg+=`• ${i.name}: ${i.qty} ${i.unit} = ${(i.price*i.qty).toLocaleString('tr-TR')} TL\n`;});
+  const t=Object.values(cart).reduce((s,i)=>s+i.price*i.qty,0);
+  msg+=`\n*Toplam: ${t.toLocaleString('tr-TR')} TL*\n\nSipariş onayı için ödeme bilgisini paylaşın.`;
+  window.open('https://wa.me/905XXXXXXXXX?text='+encodeURIComponent(msg),'_blank');
+}
+
+function toggleCart(){document.getElementById('drawer').classList.toggle('open');document.getElementById('drov').classList.toggle('open');}
+function toggleNav(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('ov').classList.toggle('open');}
+
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');if(e.target.dataset.count!==undefined)runCount(e.target);io.unobserve(e.target);}});},{threshold:.12});
+function obs(){document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));document.querySelectorAll('[data-count]').forEach(el=>io.observe(el));}
+function runCount(el){const tgt=+el.dataset.count,pre=el.dataset.pre||'',suf=el.dataset.suf||'';let n=0;const st=Math.max(1,Math.round(tgt/36));const t=setInterval(()=>{n+=st;if(n>=tgt){n=tgt;clearInterval(t);}el.textContent=pre+n+suf;},22);}
+
+function show(name){
+  document.querySelectorAll('.pg').forEach(s=>s.classList.remove('active'));
+  document.getElementById('pg-'+name).classList.add('active');
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.toggle('on',a.dataset.pg===name));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(document.getElementById('sidebar').classList.contains('open'))toggleNav();
+  renderAll();
+  document.querySelectorAll('#pg-'+name+' .reveal').forEach(el=>{el.classList.add('in');if(el.dataset.count!==undefined)runCount(el);});
+  obs();
+}
+
+renderAll();buildMq();
+document.querySelectorAll('#pg-home .reveal').forEach(el=>{el.classList.add('in');if(el.dataset.count!==undefined)runCount(el);});
+obs();
+</script>
+</body>
+</html>
