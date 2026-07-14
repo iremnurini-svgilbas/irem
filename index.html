@@ -128,6 +128,8 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-h
 .pimg svg{position:absolute;inset:0;width:100%;height:100%;}
 .pimg .em{position:relative;z-index:1;font-size:3.2rem;filter:drop-shadow(0 10px 16px rgba(0,0,0,.35));transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
 .pcard:hover .pimg .em{transform:scale(1.14) rotate(6deg);}
+.pimg .pphoto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .4s cubic-bezier(.34,1.3,.64,1);}
+.pcard:hover .pimg .pphoto{transform:scale(1.07);}
 .pcat{position:absolute;top:11px;left:11px;z-index:2;background:rgba(13,31,23,.8);backdrop-filter:blur(5px);color:var(--lime);border:1px solid rgba(255,255,255,.14);border-radius:100px;font-size:.64rem;font-weight:700;letter-spacing:.04em;padding:4px 10px;}
 .pbadge{position:absolute;top:11px;right:11px;z-index:2;background:var(--tang);color:#fff;border-radius:100px;font-size:.62rem;font-weight:800;padding:4px 9px;}
 .pbody{padding:15px;display:flex;flex-direction:column;flex:1;}
@@ -331,7 +333,7 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-h
       <svg width="17" height="17" viewBox="0 0 24 24" fill="#06281A"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347Z"/></svg>
       WhatsApp Sipariş
     </a>
-    <div class="sb-meta">Arguvan / Malatya<br>Pzt – Per arası sipariş</div>
+    <div class="sb-meta">Pzt – Per arası sipariş</div>
   </div>
 </aside>
 
@@ -349,7 +351,7 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-h
 <div class="pg active" id="pg-home">
   <div class="bento">
     <div class="tile b-main reveal">
-      <span class="badge">🌿 Malatya'dan İstanbul'a, elden ele</span>
+      <span class="badge">🌿 Köyden sofraya, elden ele</span>
       <h1>Köyden seçildi,<br><em>sofranıza</em> ulaştı.</h1>
       <p>Anadolu'nun güvenilir köy üreticilerinden, sizin için tek tek seçilmiş doğal ürünler. Her ürünün arkasında bir isim, bir köy, bir hikâye.</p>
       <div class="cta">
@@ -367,7 +369,7 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-h
       </svg>
       <div class="fruit">🍑</div>
       <svg class="seal" viewBox="0 0 100 100"><g fill="#C8F169"><path d="M50 6 53 16 63 11 62 22 73 21 67 30 77 33 68 39 75 47 64 48 67 59 57 55 55 66 50 57 45 66 43 55 33 59 36 48 25 47 32 39 23 33 33 30 27 21 38 22 37 11 47 16Z"/></g><circle cx="50" cy="38" r="21" fill="#0D1F17"/><text x="50" y="35" text-anchor="middle" font-family="Syne,sans-serif" font-size="8.5" font-weight="800" fill="#C8F169">ÜRETİCİ</text><text x="50" y="45" text-anchor="middle" font-family="Syne,sans-serif" font-size="8.5" font-weight="800" fill="#C8F169">ONAYLI</text></svg>
-      <div class="cap">Malatya Kayısısı<small>bu hafta taze hasat</small></div>
+      <div class="cap">Taze Kayısı<small>bu hafta taze hasat</small></div>
     </div>
     <div class="tile b-stat lime reveal d1"><div class="num" data-count="60" data-suf="+">0</div><div class="lbl">Köy Üreticisi</div></div>
     <div class="tile b-stat reveal d2"><div class="num" data-count="12">0</div><div class="lbl">Mevsim Ürünü</div></div>
@@ -387,17 +389,6 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-h
   </section>
 
   <section class="sec">
-    <div class="sec-hd reveal"><div><span class="sub">Süreç</span><h2>5 adımda <em>kapına gelir</em></h2></div></div>
-    <div class="steps">
-      <div class="step reveal d1"><div class="n">1</div><div class="em">🛒</div><h4>Seç</h4><p>Listeden sepete ekle</p></div>
-      <div class="step reveal d2"><div class="n">2</div><div class="em">💬</div><h4>Gönder</h4><p>WhatsApp'tan ilet</p></div>
-      <div class="step reveal d3"><div class="n">3</div><div class="em">🏦</div><h4>Öde</h4><p>IBAN'a havale</p></div>
-      <div class="step reveal d4"><div class="n">4</div><div class="em">📦</div><h4>Paketle</h4><p>Kraft ambalaj</p></div>
-      <div class="step reveal d4"><div class="n">5</div><div class="em">🚚</div><h4>Teslim</h4><p>Aras Kargo, 2 gün</p></div>
-    </div>
-  </section>
-
-  <section class="sec">
     <div class="sec-hd reveal"><div><span class="sub">Mevsim Bizden Yana</span><h2>Hasat <em>Takvimi</em></h2><p>Doğa ne zaman verirse o zaman gönderiyoruz.</p></div></div>
     <div class="cal">
       <div class="cal-c reveal d1"><div class="mon">Haziran</div><div class="em">🍑</div><div class="pn">Yaş Kayısı</div><div class="tg">Hasat zamanı</div></div>
@@ -413,8 +404,19 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-h
     <div class="rail" id="spotRail"></div>
   </section>
 
+  <section class="sec">
+    <div class="sec-hd reveal"><div><span class="sub">Süreç</span><h2>5 adımda <em>kapına gelir</em></h2></div></div>
+    <div class="steps">
+      <div class="step reveal d1"><div class="n">1</div><div class="em">🛒</div><h4>Seç</h4><p>Listeden sepete ekle</p></div>
+      <div class="step reveal d2"><div class="n">2</div><div class="em">💬</div><h4>Gönder</h4><p>WhatsApp'tan ilet</p></div>
+      <div class="step reveal d3"><div class="n">3</div><div class="em">🏦</div><h4>Öde</h4><p>IBAN'a havale</p></div>
+      <div class="step reveal d4"><div class="n">4</div><div class="em">📦</div><h4>Paketle</h4><p>Kraft ambalaj</p></div>
+      <div class="step reveal d4"><div class="n">5</div><div class="em">🚚</div><h4>Teslim</h4><p>Aras Kargo, 2 gün</p></div>
+    </div>
+  </section>
+
   <div class="foot">
-    <p>© 2025 HASAD · Köyden sofraya, sevgiyle 🌿 · Arguvan / Malatya</p>
+    <p>© 2025 HASAD · Köyden sofraya, sevgiyle 🌿</p>
     <a class="fwa" href="https://wa.me/905XXXXXXXXX" target="_blank">💬 WhatsApp ile Sipariş</a>
   </div>
 </div>
@@ -452,8 +454,8 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-h
     <div class="about-c reveal">
       <span class="sub">Hikâyemiz</span>
       <h2>Köyden şehre bir <em>köprü</em></h2>
-      <p>Malatya'da 600 kayısı ağacım, 500 tavuğum var. Yıllarca bu topraklardan elde ettiğimiz ürünleri sadece kendi ailemiz için ürettik.</p>
-      <p class="pull">"Malatya'da harika ürünler var, İstanbul'da harika insanlar — ama bu ikisi hiç buluşmuyor."</p>
+      <p>600 kayısı ağacım, 500 tavuğum var. Yıllarca bu topraklardan elde ettiğimiz ürünleri sadece kendi ailemiz için ürettik.</p>
+      <p class="pull">"Köyde harika ürünler var, şehirde harika insanlar — ama bu ikisi hiç buluşmuyor."</p>
       <p>HASAD bu köprüyü kurmak için doğdu. Her üreticiyi bizzat ziyaret ediyor, tadıyor ve onaylıyorum. Beğenmediğimi göndermiyorum — bu benim garantim.</p>
       <button class="btn-lime" onclick="show('contact')" style="margin-top:8px">Bize Ulaşın <span>→</span></button>
     </div>
@@ -481,7 +483,7 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-h
       <div class="ci">📋</div><h3>İletişim Bilgileri</h3>
       <div class="clist">
         <div class="ci-row"><div class="i">📱</div><div><div class="l">WhatsApp & Telefon</div><div class="v">0(5XX) XXX XX XX</div></div></div>
-        <div class="ci-row"><div class="i">📍</div><div><div class="l">Üretim Yeri</div><div class="v">Arguvan / Malatya</div></div></div>
+        <div class="ci-row"><div class="i">✉️</div><div><div class="l">E-posta</div><div class="v"><a href="mailto:hasadsepetim@gmail.com">hasadsepetim@gmail.com</a></div></div></div>
         <div class="ci-row"><div class="i">🚚</div><div><div class="l">Teslimat</div><div class="v">Türkiye geneli — Aras Kargo</div></div></div>
         <div class="ci-row"><div class="i">📅</div><div><div class="l">Sipariş Günleri</div><div class="v">Pazartesi – Perşembe</div></div></div>
         <div class="ci-row"><div class="i">🌐</div><div><div class="l">Web</div><div class="v">hasad.co</div></div></div>
@@ -519,29 +521,52 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-h
 
 <script>
 const PRODS=[
-  {id:1,name:'Yaş Kayısı',em:'🍑',cat:'Kayısı',pr:'Kendi Üretim',vl:'Arguvan / Malatya',price:80,unit:'kg',rat:4.9,rev:42,bdg:'Taze'},
-  {id:2,name:'Kuru Kayısı',em:'🍑',cat:'Kayısı',pr:'Kendi Üretim',vl:'Arguvan / Malatya',price:180,unit:'kg',rat:4.8,rev:38,bdg:'Çok Satan'},
-  {id:3,name:'Kayısı Pekmezi',em:'🍯',cat:'Kayısı',pr:'Ayşe Hanım',vl:'Arguvan / Malatya',price:120,unit:'kg',rat:4.8,rev:29,bdg:'Sınırlı'},
-  {id:4,name:'Kayısı Pestili',em:'🍫',cat:'Kayısı',pr:'Ayşe Hanım',vl:'Arguvan / Malatya',price:140,unit:'kg',rat:4.7,rev:18,bdg:''},
-  {id:5,name:'Köy Yumurtası',em:'🥚',cat:'Yumurta',pr:'Kendi Üretim',vl:'Arguvan / Malatya',price:8,unit:'adet',rat:4.9,rev:61,bdg:'Taze'},
-  {id:6,name:'Çiçek Balı',em:'🍯',cat:'Köy Ürünleri',pr:'Mahmut Bey',vl:'Sivrice / Elazığ',price:220,unit:'kg',rat:4.9,rev:47,bdg:'Doğal'},
-  {id:7,name:'Tulum Peyniri',em:'🧀',cat:'Köy Ürünleri',pr:'Fatma Hanım',vl:'Refahiye / Erzincan',price:280,unit:'kg',rat:4.7,rev:33,bdg:'Sınırlı'},
-  {id:8,name:'Köy Tereyağı',em:'🧈',cat:'Köy Ürünleri',pr:'Fatma Hanım',vl:'Refahiye / Erzincan',price:320,unit:'kg',rat:4.8,rev:21,bdg:''},
-  {id:9,name:'Ev Tarhanası',em:'🥣',cat:'Köy Ürünleri',pr:'Hüseyin Bey',vl:'Kahramanmaraş',price:90,unit:'kg',rat:4.6,rev:15,bdg:''},
-  {id:10,name:'Ev Reçeli',em:'🍓',cat:'Köy Ürünleri',pr:'Zehra Hanım',vl:'Bolu / Merkez',price:85,unit:'kavanoz',rat:4.6,rev:12,bdg:'Sınırlı'},
-  {id:11,name:'Sızma Zeytinyağı',em:'🫒',cat:'Zeytinyağı',pr:'Mehmet Bey',vl:'Edremit / Balıkesir',price:350,unit:'lt',rat:4.8,rev:24,bdg:'Soğuk Sıkım'},
-  {id:12,name:'Kekik Balı',em:'🍯',cat:'Köy Ürünleri',pr:'Mahmut Bey',vl:'Sivrice / Elazığ',price:240,unit:'kg',rat:4.8,rev:19,bdg:''},
+  {id:1,name:'Yaş Kayısı',em:'🍑',img:'apricot',cat:'Kayısı',pr:'Kendi Üretim',price:80,unit:'kg',rat:4.9,rev:42,bdg:'Taze'},
+  {id:2,name:'Kuru Kayısı',em:'🍑',img:'apricot',cat:'Kayısı',pr:'Kendi Üretim',price:180,unit:'kg',rat:4.8,rev:38,bdg:'Çok Satan'},
+  {id:3,name:'Kayısı Pekmezi',em:'🍯',img:'apricot',cat:'Kayısı',pr:'Ayşe Hanım',price:120,unit:'kg',rat:4.8,rev:29,bdg:'Sınırlı'},
+  {id:4,name:'Kayısı Pestili',em:'🍫',img:'apricot',cat:'Kayısı',pr:'Ayşe Hanım',price:140,unit:'kg',rat:4.7,rev:18,bdg:''},
+  {id:5,name:'Köy Yumurtası',em:'🥚',img:'egg',cat:'Yumurta',pr:'Kendi Üretim',price:8,unit:'adet',rat:4.9,rev:61,bdg:'Taze'},
+  {id:6,name:'Çiçek Balı',em:'🍯',img:'honey',cat:'Köy Ürünleri',pr:'Mahmut Bey',price:220,unit:'kg',rat:4.9,rev:47,bdg:'Doğal'},
+  {id:7,name:'Tulum Peyniri',em:'🧀',img:'cheese',cat:'Köy Ürünleri',pr:'Fatma Hanım',price:280,unit:'kg',rat:4.7,rev:33,bdg:'Sınırlı'},
+  {id:8,name:'Köy Tereyağı',em:'🧈',img:'butter',cat:'Köy Ürünleri',pr:'Fatma Hanım',price:320,unit:'kg',rat:4.8,rev:21,bdg:''},
+  {id:9,name:'Ev Tarhanası',em:'🥣',img:'tomato',cat:'Köy Ürünleri',pr:'Hüseyin Bey',price:90,unit:'kg',rat:4.6,rev:15,bdg:''},
+  {id:10,name:'Ev Reçeli',em:'🍓',img:'jam',cat:'Köy Ürünleri',pr:'Zehra Hanım',price:85,unit:'kavanoz',rat:4.6,rev:12,bdg:'Sınırlı'},
+  {id:11,name:'Sızma Zeytinyağı',em:'🫒',img:'salad',cat:'Zeytinyağı',pr:'Mehmet Bey',price:350,unit:'lt',rat:4.8,rev:24,bdg:'Soğuk Sıkım'},
+  {id:12,name:'Kekik Balı',em:'🍯',img:'honey',cat:'Köy Ürünleri',pr:'Mahmut Bey',price:240,unit:'kg',rat:4.8,rev:19,bdg:''},
+  {id:13,name:'Pul Biber 500gr',em:'🌶️',img:'chili',cat:'Baharat & Tarhana',pr:'Kendi Üretim',price:120,unit:'paket',rat:4.8,rev:9,bdg:'Yeni'},
+  {id:14,name:'Sebzeli Un Tarhanası 500gr',em:'🥣',img:'tomato',cat:'Baharat & Tarhana',pr:'Kendi Üretim',price:95,unit:'paket',rat:4.7,rev:6,bdg:'Yeni'},
+  {id:15,name:'Karadut Sirkesi 1Lt Cam Şişe',em:'🍶',img:'jar',cat:'Sirke',pr:'Kendi Üretim',price:150,unit:'şişe',rat:4.8,rev:5,bdg:'Yeni'},
+  {id:16,name:'Elma Sirkesi 1Lt Cam Şişe',em:'🍶',img:'apple',cat:'Sirke',pr:'Kendi Üretim',price:110,unit:'şişe',rat:4.7,rev:7,bdg:'Yeni'},
+  {id:17,name:'Üzüm Pekmezi 1Kg Cam Şişe',em:'🍇',img:'grape',cat:'Pekmez & Reçel',pr:'Kendi Üretim',price:170,unit:'kavanoz',rat:4.9,rev:8,bdg:'Yeni'},
+  {id:18,name:'Erik Pekmezi (Ambalajsız)',em:'🫐',img:'jar',cat:'Pekmez & Reçel',pr:'Kendi Üretim',price:160,unit:'kg',rat:4.7,rev:4,bdg:'Yeni'},
+  {id:19,name:'Gelincik Reçeli 500gr',em:'🌺',img:'jam',cat:'Pekmez & Reçel',pr:'Kendi Üretim',price:135,unit:'kavanoz',rat:4.8,rev:5,bdg:'Yeni'},
+  {id:20,name:'Kayısı Reçeli 1kg Cam',em:'🍑',img:'apricot',cat:'Pekmez & Reçel',pr:'Kendi Üretim',price:180,unit:'kavanoz',rat:4.8,rev:6,bdg:'Yeni'},
+  {id:21,name:'Ekşi Nar Marmelatı 500gr Cam',em:'🥫',img:'pomegranate',cat:'Marmelat',pr:'Kendi Üretim',price:130,unit:'kavanoz',rat:4.7,rev:4,bdg:'Yeni'},
+  {id:22,name:'Frenk Üzümlü Bal K. Marmelatı',em:'🫐',img:'berry',cat:'Marmelat',pr:'Kendi Üretim',price:140,unit:'kavanoz',rat:4.7,rev:3,bdg:'Yeni'},
+  {id:23,name:'Pumpkin Spice Marmelatı 500gr',em:'🎃',img:'pumpkin',cat:'Marmelat',pr:'Kendi Üretim',price:135,unit:'kavanoz',rat:4.7,rev:5,bdg:'Yeni'},
+  {id:24,name:'Rodos Kabağı Marmelatı 500gr',em:'🎃',img:'pumpkin',cat:'Marmelat',pr:'Kendi Üretim',price:130,unit:'kavanoz',rat:4.6,rev:3,bdg:'Yeni'},
+  {id:25,name:'Karanfilli Beyaz Dut Marmelatı',em:'🫐',img:'berry',cat:'Marmelat',pr:'Kendi Üretim',price:140,unit:'kavanoz',rat:4.8,rev:4,bdg:'Yeni'},
+  {id:26,name:'Yeşil Elma Marmelatı 500gr',em:'🍏',img:'apple',cat:'Marmelat',pr:'Kendi Üretim',price:120,unit:'kavanoz',rat:4.6,rev:6,bdg:'Yeni'},
+  {id:27,name:'Tarçınlı Üzüm Marmelatı 500gr',em:'🍇',img:'grape',cat:'Marmelat',pr:'Kendi Üretim',price:125,unit:'kavanoz',rat:4.7,rev:4,bdg:'Yeni'},
+  {id:28,name:'Ayva Marmelatı 500gr Cam Kav.',em:'🍐',img:'pear',cat:'Marmelat',pr:'Kendi Üretim',price:125,unit:'kavanoz',rat:4.7,rev:5,bdg:'Yeni'},
+  {id:29,name:'Vişne Marmelatı 500gr Cam Kav.',em:'🍒',img:'cherry',cat:'Marmelat',pr:'Kendi Üretim',price:135,unit:'kavanoz',rat:4.8,rev:7,bdg:'Yeni'},
+  {id:30,name:'Karışık Narenciye Marmelatı',em:'🍊',img:'orange',cat:'Marmelat',pr:'Kendi Üretim',price:130,unit:'kavanoz',rat:4.7,rev:4,bdg:'Yeni'},
+  {id:31,name:'Naneli Yabani Acı Gül Marmelatı',em:'🌹',img:'flower',cat:'Marmelat',pr:'Kendi Üretim',price:145,unit:'kavanoz',rat:4.8,rev:3,bdg:'Yeni'},
+  {id:32,name:'Naneli Limon Marmelatı 500gr',em:'🍋',img:'lemon',cat:'Marmelat',pr:'Kendi Üretim',price:120,unit:'kavanoz',rat:4.7,rev:5,bdg:'Yeni'},
+  {id:33,name:'Badem',em:'🌰',img:'almond',cat:'Kuruyemiş',pr:'Ferruh Keleştimur',price:260,unit:'kg',rat:4.8,rev:5,bdg:'Yeni'},
 ];
 const PRODUCERS=[
-  {name:'Ayşe Hanım',em:'👩‍🌾',vl:'Arguvan / Malatya',bdg:'Usta',score:4.8,rev:76,prods:['Kayısı Pekmezi','Pestil'],quote:'"Çocuğum kaşıkla yedi, bayıldı!"'},
-  {name:'Mahmut Bey',em:'👨‍🌾',vl:'Sivrice / Elazığ',bdg:'Usta',score:4.9,rev:47,prods:['Çiçek Balı','Kekik Balı'],quote:'"30 yıldır bu işi yapıyorum."'},
-  {name:'Fatma Hanım',em:'👩‍🌾',vl:'Refahiye / Erzincan',bdg:'Güvenilir',score:4.7,rev:54,prods:['Tulum Peyniri','Tereyağı'],quote:'"Fırında eridi, muhteşemdi!"'},
-  {name:'Hüseyin Bey',em:'👨‍🌾',vl:'Kahramanmaraş',bdg:'Güvenilir',score:4.6,rev:28,prods:['Tarhana','İsot'],quote:'"Kış ayları en verimli dönem."'},
-  {name:'Zehra Hanım',em:'👩‍🌾',vl:'Bolu / Merkez',bdg:'Yeni',score:4.6,rev:12,prods:['Ev Reçeli'],quote:'"Her kavanoz ayrı özen ister."'},
-  {name:'Mehmet Bey',em:'👨‍🌾',vl:'Edremit / Balıkesir',bdg:'Güvenilir',score:4.8,rev:24,prods:['Sızma Zeytinyağı'],quote:'"Soğuk sıkımı asla fark eder."'},
+  {name:'Ayşe Hanım',em:'👩‍🌾',vl:'Elazığ / Baskil',bdg:'Usta',score:4.8,rev:76,prods:['Kayısı Pekmezi','Pestil'],quote:'"Çocuğum kaşıkla yedi, bayıldı!"'},
+  {name:'Mahmut Bey',em:'👨‍🌾',vl:'Elazığ / Baskil',bdg:'Usta',score:4.9,rev:47,prods:['Çiçek Balı','Kekik Balı'],quote:'"30 yıldır bu işi yapıyorum."'},
+  {name:'Fatma Hanım',em:'👩‍🌾',vl:'Elazığ / Baskil',bdg:'Güvenilir',score:4.7,rev:54,prods:['Tulum Peyniri','Tereyağı'],quote:'"Fırında eridi, muhteşemdi!"'},
+  {name:'Hüseyin Bey',em:'👨‍🌾',vl:'Elazığ / Baskil',bdg:'Güvenilir',score:4.6,rev:28,prods:['Tarhana','İsot'],quote:'"Kış ayları en verimli dönem."'},
+  {name:'Zehra Hanım',em:'👩‍🌾',vl:'Elazığ / Baskil',bdg:'Yeni',score:4.6,rev:12,prods:['Ev Reçeli'],quote:'"Her kavanoz ayrı özen ister."'},
+  {name:'Mehmet Bey',em:'👨‍🌾',vl:'Elazığ / Baskil',bdg:'Güvenilir',score:4.8,rev:24,prods:['Sızma Zeytinyağı'],quote:'"Soğuk sıkımı asla fark eder."'},
+  {name:'Ferruh Keleştimur',em:'👨‍🌾',vl:'Elazığ / Baskil',bdg:'Güvenilir',score:4.8,rev:11,prods:['Badem'],quote:'"Badem ağaçlarım 20 yıllık, taş toprak görmez."'},
 ];
 
 function scn(){return `<svg viewBox="0 0 200 160" preserveAspectRatio="xMidYMid slice"><rect width="200" height="160" fill="#16331F"/><circle cx="160" cy="34" r="20" fill="#C8F169" opacity=".55"/><path d="M0 118 Q60 94 110 114 T200 106 V160 H0 Z" fill="#2C5A38"/><path d="M0 138 Q70 118 130 134 T200 128 V160 H0 Z" fill="#48895A" opacity=".8"/></svg>`;}
+function IMG(p){return `https://loremflickr.com/600/480/${p.img||'food'}?lock=${p.id}`;}
 function starStr(r){let s='';for(let i=0;i<5;i++)s+=i<Math.round(r)?'★':'☆';return s;}
 
 let cart={};
@@ -550,9 +575,9 @@ let curFilter='Tümü';
 function pCard(p){
   const q=cart[p.id]?.qty||0;
   return `<div class="pcard">
-    <div class="pimg">${scn()}<span class="em">${p.em}</span><span class="pcat">${p.cat}</span>${p.bdg?`<span class="pbadge">${p.bdg}</span>`:''}</div>
+    <div class="pimg">${scn()}<span class="em">${p.em}</span><img class="pphoto" src="images/p${p.id}.jpg" alt="${p.name}" loading="lazy" data-fb="${IMG(p)}" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.dataset.fb='';}else{this.remove();}"><span class="pcat">${p.cat}</span>${p.bdg?`<span class="pbadge">${p.bdg}</span>`:''}</div>
     <div class="pbody">
-      <div class="pprod">📍 ${p.pr} · ${p.vl}</div>
+      <div class="pprod">📍 ${p.pr}</div>
       <div class="pname">${p.name}</div>
       <div class="pstars"><b>${starStr(p.rat)}</b> ${p.rat} (${p.rev})</div>
       <div class="pfoot">
